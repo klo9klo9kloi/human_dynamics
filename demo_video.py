@@ -175,20 +175,22 @@ def predict_on_tracks(model, img_dir, poseflow_path, output_path, track_id,
             print('Saving prediction results to', pred_path)
             pickle.dump(preds, f)
 
-    if trim_length > 0:
-        output_path += '_trim'
+# @klo9klo9kloi: Skip rendering; unnecesary and expensive
 
-    print('----------')
-    print('Rendering results to {}.'.format(output_path))
-    print('----------')
-    render_preds(
-        output_path=output_path,
-        config=config,
-        preds=preds,
-        images=images,
-        images_orig=images_orig,
-        trim_length=trim_length,
-    )
+#    if trim_length > 0:
+#        output_path += '_trim'
+
+#    print('----------')
+#    print('Rendering results to {}.'.format(output_path))
+#    print('----------')
+#    render_preds(
+#        output_path=output_path,
+#        config=config,
+#        preds=preds,
+#        images=images,
+#        images_orig=images_orig,
+#        trim_length=trim_length,
+#    )
 
 
 def run_on_video(model, vid_path, trim_length):

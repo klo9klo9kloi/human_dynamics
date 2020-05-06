@@ -71,9 +71,13 @@ def run_alphapose(img_dir, out_dir):
     # Ex:
     # python3 demo.py --indir demo_data/43139284_2266542610046186_3116128039555373672_n --outdir demo_data/43139284_2266542610046186_3116128039555373672_n/output --sp
     cmd = [
-        'python', 'demo.py',
+        'python3', 'scripts/demo_inference.py',
+        '--cfg', 'configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml',
+        '--checkpoint', 'pretrained_models/fast_res50_256x192.pth',
         '--indir', img_dir,
         '--outdir', out_dir,
+        '--detbatch', '4',
+	'--posebatch', '4'
         '--sp',  # Needed to avoid multi-processing issues.
     ]
 
@@ -102,7 +106,7 @@ def run_poseflow(img_dir, out_dir):
     # Ex:
     # python PoseFlow/tracker-general.py --imgdir demo_data/43139284_2266542610046186_3116128039555373672_n --in_json demo_data/43139284_2266542610046186_3116128039555373672_n/output/alphapose-results.json --out_json demo_data/43139284_2266542610046186_3116128039555373672_n/output/alphapose-results-forvis-tracked.json --visdir demo_data/43139284_2266542610046186_3116128039555373672_n/output/
     cmd = [
-        'python', 'PoseFlow/tracker-general.py',
+        'python3', 'PoseFlow/tracker-general.py',
         '--imgdir', img_dir,
         '--in_json', alphapose_json,
         '--out_json', out_json,

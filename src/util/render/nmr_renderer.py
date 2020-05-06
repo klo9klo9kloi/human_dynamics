@@ -145,11 +145,11 @@ class VisRenderer(object):
         # Adjust for batch.
         faces = self.faces.repeat(num_batch, 1, 1)
         if rend_mask:
-            rend = self.renderer.render_silhouettes(proj_verts, faces)
+            rend = self.renderer.render_silhouettes(proj_verts, faces)[1]
             rend = torch.unsqueeze(rend, 0)
             rend = rend.repeat(1, 3, 1, 1)
         else:
-            rend = self.renderer.render(proj_verts, faces, texture)
+            rend = self.renderer.render(proj_verts, faces, texture)[0]
 
         rend = rend.data.cpu().numpy().transpose((0, 2, 3, 1))
         rend = np.clip(rend, 0, 1) * 255.0
