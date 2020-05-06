@@ -10,7 +10,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import ipdb
+#import ipdb
 import numpy as np
 import pickle
 
@@ -84,7 +84,7 @@ class SMPL(object):
         if joint_type not in ['cocoplus', 'lsp']:
             print('BAD!! Unknown joint type: %s, it must be either "cocoplus" '
                   'or "lsp"' % joint_type)
-            ipdb.set_trace()
+            #ipdb.set_trace()
 
     def __call__(self, beta, theta, get_skin=False, name=None):
         """
