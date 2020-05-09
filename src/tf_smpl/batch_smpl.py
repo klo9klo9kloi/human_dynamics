@@ -1,7 +1,7 @@
 """
 Tensorflow SMPL implementation as batch.
 Specify joint types:
-'coco': Returns COCO+ 19 joints
+'coco': Returns COCO+ 25 joints
 'lsp': Returns H3.6M-LSP 14 joints
 Note: To get original smpl joints, use self.J_transformed
 """
@@ -72,7 +72,7 @@ class SMPL(object):
             dtype=dtype,
             trainable=False)
 
-        # This returns 19 keypoints: 6890 x 19
+        # This returns 25 keypoints: 6890 x 25
         self.joint_regressor = tf.Variable(
             dd['cocoplus_regressor'].T.todense(),
             name="cocoplus_regressor",
@@ -84,7 +84,7 @@ class SMPL(object):
         if joint_type not in ['cocoplus', 'lsp']:
             print('BAD!! Unknown joint type: %s, it must be either "cocoplus" '
                   'or "lsp"' % joint_type)
-            #ipdb.set_trace()
+            ipdb.set_trace()
 
     def __call__(self, beta, theta, get_skin=False, name=None):
         """
@@ -157,6 +157,6 @@ class SMPL(object):
             joints = tf.stack([joint_x, joint_y, joint_z], axis=2)
 
             if get_skin:
-                return verts, joints, Rs
+                return verts, joints, Rs, J
             else:
                 return joints

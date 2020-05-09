@@ -226,6 +226,9 @@ class OmegasPred(Omegas):
         self.raw = tf.constant((), shape=(self.batch_size, 0, 85))
         self.use_optcam = use_optcam
         self.is_training = is_training
+        #@klo9klo9kloi
+        self.J = tf.constant((), shape=(self.batch_size, 24, 3))
+        self.J_transformed = tf.constant((), shape=(self.batch_size, 24, 3))
         OmegasPred.omega_instances.append(self)
 
     def update_instance_vars(self):
@@ -270,11 +273,13 @@ class OmegasPred(Omegas):
         B = self.batch_size
         T = self.length
 
-        verts, joints, poses_rot = self.smpl(
+        verts, joints, poses_rot, J = self.smpl(
             beta=tf.reshape(self.shapes, (B * T, 10)),
             theta=tf.reshape(self.poses_aa, (B * T, 24, 3)),
             get_skin=True
         )
+        self.J = tf.reshape(J, (B, T, 24, 3))
+        self.J_transformed = tf.reshape(self.smpl.J_transformed, (B, T, 24, 3))
         self.joints = tf.reshape(joints, (B, T, self.config.num_kps, 3))
         self.poses_rot = tf.reshape(poses_rot, (B, T, 24, 3, 3))
 
@@ -334,6 +339,12 @@ class OmegasPred(Omegas):
             Raw Omega (BxTx85).
         """
         return self.raw
+
+    def get_J(self):
+        return self.J
+
+    def get_J_trans(self):
+        return self.J_transformed
 
     @classmethod
     def compute_all_smpl(cls):

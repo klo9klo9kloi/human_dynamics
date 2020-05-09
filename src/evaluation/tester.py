@@ -224,6 +224,8 @@ class Tester(object):
             'shapes' + suffix: omegas.get_shapes(),
             'verts' + suffix: omegas.get_verts(),
             'omegas' + suffix: omegas.get_raw(),
+            'J' + suffix: omegas.get_J(),
+            'J_transformed' + suffix: omegas.get_J_trans()
         }
 
     def predict(self, images):
