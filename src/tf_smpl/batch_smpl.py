@@ -157,6 +157,6 @@ class SMPL(object):
             joints = tf.stack([joint_x, joint_y, joint_z], axis=2)
 
             if get_skin:
-                return verts, joints, Rs, J
+                return verts, joints, Rs, J #@klo9klo9kloi
             else:
                 return joints

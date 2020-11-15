@@ -226,9 +226,8 @@ class OmegasPred(Omegas):
         self.raw = tf.constant((), shape=(self.batch_size, 0, 85))
         self.use_optcam = use_optcam
         self.is_training = is_training
-        #@klo9klo9kloi
-        self.J = tf.constant((), shape=(self.batch_size, 24, 3))
-        self.J_transformed = tf.constant((), shape=(self.batch_size, 24, 3))
+        self.J = tf.constant((), shape=(self.batch_size, 24, 3))  #@klo9klo9kloi
+        self.J_transformed = tf.constant((), shape=(self.batch_size, 24, 3))  #@klo9klo9kloi
         OmegasPred.omega_instances.append(self)
 
     def update_instance_vars(self):
@@ -273,13 +272,13 @@ class OmegasPred(Omegas):
         B = self.batch_size
         T = self.length
 
-        verts, joints, poses_rot, J = self.smpl(
+        verts, joints, poses_rot, J = self.smpl( # @klo9klo9kloi
             beta=tf.reshape(self.shapes, (B * T, 10)),
             theta=tf.reshape(self.poses_aa, (B * T, 24, 3)),
             get_skin=True
         )
-        self.J = tf.reshape(J, (B, T, 24, 3))
-        self.J_transformed = tf.reshape(self.smpl.J_transformed, (B, T, 24, 3))
+        self.J = tf.reshape(J, (B, T, 24, 3)) # @klo9klo9kloi
+        self.J_transformed = tf.reshape(self.smpl.J_transformed, (B, T, 24, 3)) # @klo9klo9kloi
         self.joints = tf.reshape(joints, (B, T, self.config.num_kps, 3))
         self.poses_rot = tf.reshape(poses_rot, (B, T, 24, 3, 3))
 
@@ -340,10 +339,10 @@ class OmegasPred(Omegas):
         """
         return self.raw
 
-    def get_J(self):
+    def get_J(self):  #@klo9klo9kloi
         return self.J
 
-    def get_J_trans(self):
+    def get_J_trans(self):  #@klo9klo9kloi
         return self.J_transformed
 
     @classmethod
